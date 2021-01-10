@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="content-section">
+        <div class="row">
+            
+        </div>
+        
+        <div class="media">
+                <img class="rounded-cicle account-img" src="/media/{{item.profilePicture}}" alt="">
+                <div class="media-body">
+                    
+                    <li>FirstName : {{ object.firstName }}</li>
+                    <li>LastName : {{ object.lastName }}</li>
+                    <li>Email : {{ object.email }}</li>
+                    <div>
+                    Subjects :
+                        {% for subject in object.subject.all %}
+                        <span 
+                        
+                        style="padding:5px;border:1px solid #ccc;
+                            margin-right:5px; border-radius:5px
+                        "> 
+                            {{subject.title}}
+                        </span>
+                        {%endfor%}
+                    </div>
+                </div>
+        </div>
+       
+    </div>
+
+{% endblock content %}

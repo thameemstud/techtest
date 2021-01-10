@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <div class="content-section">
+        <div class="row">
+            <div class="col-md-3">
+                <h1>Teachers</h1>
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn btn-outline-info" href="{% url 'dir-create' %}">Add New Teacher</a>
+            </div>
+            <div class="col-md-6">
+                <form method="GET" action="/">
+                    <div class="col-md-9" style="float:left">
+                        <div>
+                            <input class="textinput textInput form-control" value="{{filter_lastname}}" type="text" name="filter_lastname"  id="filter_lastname" placeholder="Filter by 1st letter of lastName" />
+                        </div>
+                         <div style="margin-top:10px">
+                            <input class="textinput textInput form-control" 
+                         
+                         value="{{filter_subject}}" type="text" name="filter_subject"  id="filter_subject" placeholder="Filter by 1st letter of subject name" />
+                         </div>
+                    
+                    </div>
+                    <div class="col-md-3" style="float:left">
+                        <div class="form-group">
+                            <button class="btn btn-outline-info" type='submit'>Filter</button>
+                            <a 
+                                style="margin-top:10px"
+                            class="btn btn-outline-info" href="/">Clear</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% for item in object_list %}
+        <div class="media">
+                <img class="rounded-cicle account-img" src="/media/{{item.profilePicture}}" alt="">
+                <div class="media-body">
+                    <a href="{% url 'teacher-detail' pk=item.pk %}">{{item.firstName}} {{ item.lastName }}</a>
+                    <li>Email : {{ item.email }}</li>
+                    <div>
+                    Subjects :
+                        {% for subject in item.subject.all %}
+                        <span 
+                        
+                        style="padding:5px;border:1px solid #ccc;
+                            margin-right:5px; border-radius:5px
+                        "> 
+                            {{subject.title}}
+                        </span>
+                        {%endfor%}
+                    </div>
+                </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}

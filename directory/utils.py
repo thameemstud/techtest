@@ -11,9 +11,6 @@ class EmailValidatorMixin(object):
 
 class FilterMixin(object):
 
-    def __init__(self):
-        self.get_filter_dict()
-
     @property
     def filter_dict(self):
         raise NotImplementedError("filter_dict is not implemented")

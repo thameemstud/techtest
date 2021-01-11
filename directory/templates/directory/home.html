@@ -7,7 +7,7 @@
                 <h1>Teachers</h1>
             </div>
             <div class="col-md-3">
-                <a class="btn btn btn-outline-info" href="{% url 'dir-create' %}">Add New Teacher</a>
+                <a class="btn btn btn-outline-info" href="{% url 'teacher-create' %}">Add New Teacher</a>
             </div>
             <div class="col-md-6">
                 <form method="GET" action="/">
@@ -37,7 +37,8 @@
         <div class="media">
                 <img class="rounded-cicle account-img" src="/media/{{item.profilePicture}}" alt="">
                 <div class="media-body">
-                    <a href="{% url 'teacher-detail' pk=item.pk %}">{{item.firstName}} {{ item.lastName }}</a>
+                    <a href="{{item.get_absolute_url}}">{{item.firstName}} {{ item.lastName }}</a>
+                    
                     <li>Email : {{ item.email }}</li>
                     <div>
                     Subjects :

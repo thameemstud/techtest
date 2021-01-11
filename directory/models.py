@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 from django.contrib.auth.models import User
 
 class Subject(models.Model):
@@ -24,4 +25,7 @@ class Teacher(models.Model):
 
     class Meta:
         ordering = ["-dateCreated"]
+
+    def get_absolute_url(self):
+        return reverse('teacher-detail', args=[self.id])
 

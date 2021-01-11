@@ -97,8 +97,10 @@ class TeacherCreateView(EmailValidatorMixin, LoginRequiredMixin, View):
                                                         title=subj
                                                     )
                                 teacher_obj.subject.add(sobj)
-                            pic_name = row[4].strip()
+                            pic_name = row[2].strip()
+                            # import pdb;pdb.set_trace()
                             if pic_name in zipfile_obj.namelist():
+                                
                                 file_obj = File(zipfile_obj.open(pic_name, 'r'))
                                 teacher_obj.profilePicture.save(pic_name, file_obj, save=True)
                 
@@ -106,7 +108,8 @@ class TeacherCreateView(EmailValidatorMixin, LoginRequiredMixin, View):
             
             except Exception as e:
                 messages.error(request, e)
-            
+            finally:
+                zipfile_obj.close()
             
             
         return render(request, self.template_name, {'form': form})

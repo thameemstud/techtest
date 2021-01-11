@@ -18,16 +18,27 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 
-from .utils import EmailValidatorMixin
+from .utils import EmailValidatorMixin, FilterMixin, trim_str
 from .models import Teacher,Subject
 from .forms import BulkUploadForm
 
 
 
-class Home(ListView):
+class Home(FilterMixin, ListView):
   model = Teacher
   template_name = 'directory/home.html'
   
+  filter_dict = {
+        "filter_lastname": {
+            "lookup":"lastName__istartswith",
+            "method":trim_str(2)
+        },
+        "filter_subject": {
+            "lookup":"subject__title__istartswith",
+            "method":trim_str(2)
+        }
+    }
+
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     context["filter_lastname"] = self.request.GET.get('filter_lastname', "")
@@ -36,13 +47,14 @@ class Home(ListView):
 
   def get_queryset(self):
     qs = self.model.objects.all()
-    filter_lastname = self.request.GET.get('filter_lastname', "")
-    filter_subject = self.request.GET.get('filter_subject', "")
-    if filter_lastname:
-        qs = qs.filter(lastName__istartswith=filter_lastname.strip()[:2])
-    if filter_subject:
-        qs = qs.filter(subject__title__istartswith=filter_subject.strip()[:2])
-    
+    # filter_lastname = self.request.GET.get('filter_lastname', "")
+    # filter_subject = self.request.GET.get('filter_subject', "")
+    # if filter_lastname:
+    #     qs = qs.filter(lastName__istartswith=filter_lastname.strip()[:2])
+    # if filter_subject:
+    #     qs = qs.filter(subject__title__istartswith=filter_subject.strip()[:2])
+    print (self.get_filters())
+    qs = qs.filter(**self.get_filters())
     return qs
 
 class TeacherDetailView(DetailView):
@@ -103,7 +115,7 @@ class TeacherCreateView(EmailValidatorMixin, LoginRequiredMixin, View):
                                 
                                 file_obj = File(zipfile_obj.open(pic_name, 'r'))
                                 teacher_obj.profilePicture.save(pic_name, file_obj, save=True)
-                zipfile_obj.close()
+                
                 return HttpResponseRedirect(self.get_success_url())    
             
             except Exception as e:

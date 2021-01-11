@@ -103,7 +103,7 @@ class TeacherCreateView(EmailValidatorMixin, LoginRequiredMixin, View):
                                 
                                 file_obj = File(zipfile_obj.open(pic_name, 'r'))
                                 teacher_obj.profilePicture.save(pic_name, file_obj, save=True)
-                
+                zipfile_obj.close()
                 return HttpResponseRedirect(self.get_success_url())    
             
             except Exception as e:

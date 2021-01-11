@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.forms import ValidationError
 from django.contrib import messages
+from django.core.files import File
 
 from django.views.generic import View
 from django.views.generic.list import ListView
@@ -20,6 +21,7 @@ from django.http import HttpResponseRedirect
 from .utils import EmailValidatorMixin
 from .models import Teacher,Subject
 from .forms import BulkUploadForm
+
 
 
 class Home(ListView):
@@ -49,12 +51,13 @@ class TeacherDetailView(DetailView):
 
 
 
-class TeacherCreateView(EmailValidatorMixin, View):
+class TeacherCreateView(EmailValidatorMixin, LoginRequiredMixin, View):
 
     form = BulkUploadForm
     model = Teacher
     template_name = "directory/create.html"
     subjet_count = 5
+    redirect_field_name = 'redirect_to'
 
     def get(self, request, *args, **kwargs):
             context = {'form': self.form()}
@@ -70,8 +73,9 @@ class TeacherCreateView(EmailValidatorMixin, View):
                 csv_data = csv.reader(io.StringIO(file_obj), delimiter=',')
 
                 zip_file = form.cleaned_data["zip_file"]
-                zipfile_obj = ZipFile(zip_file)
+                zipfile_obj = ZipFile(zip_file, 'r')
                 
+        
                 columns = next(csv_data)
                 for row in csv_data:
                     email = row[3].strip()

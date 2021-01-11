@@ -14,9 +14,11 @@ class FilterMixin(object):
     def __init__(self):
         self.get_filter_dict()
 
+    @property
+    def filter_dict(self):
+        raise NotImplementedError("filter_dict is not implemented")
+
     def get_filter_dict(self):
-        if not self.filter_dict:
-            raise NotImplementedError("couldn't find filter dict")
         return self.filter_dict.items()
 
     def get_filters(self):

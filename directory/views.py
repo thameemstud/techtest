@@ -20,14 +20,15 @@ from django.http import HttpResponseRedirect
 
 from .utils import EmailValidatorMixin, FilterMixin, trim_str
 from .models import Teacher,Subject
-from .forms import BulkUploadForm
+from .forms import BulkUploadForm, FilterForm
 
 
 
 class Home(FilterMixin, ListView):
   model = Teacher
   template_name = 'directory/home.html'
-  
+  filter_form = FilterForm
+
   filter_dict = {
         "filter_lastname": {
             "lookup":"lastName__istartswith",
@@ -41,19 +42,12 @@ class Home(FilterMixin, ListView):
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
-    context["filter_lastname"] = self.request.GET.get('filter_lastname', "")
-    context["filter_subject"] = self.request.GET.get('filter_subject', "")
+    form = self.filter_form(self.request.GET)
+    context["filter_form"] = form
     return context
 
   def get_queryset(self):
     qs = self.model.objects.all()
-    # filter_lastname = self.request.GET.get('filter_lastname', "")
-    # filter_subject = self.request.GET.get('filter_subject', "")
-    # if filter_lastname:
-    #     qs = qs.filter(lastName__istartswith=filter_lastname.strip()[:2])
-    # if filter_subject:
-    #     qs = qs.filter(subject__title__istartswith=filter_subject.strip()[:2])
-    print (self.get_filters())
     qs = qs.filter(**self.get_filters())
     return qs
 

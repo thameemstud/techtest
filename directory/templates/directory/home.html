@@ -35,7 +35,7 @@
         </div>
         {% for item in object_list %}
         <div class="media">
-                <img class="rounded-cicle account-img" src="/media/{{item.profilePicture}}" alt="">
+                <img class="rounded-cicle account-img" src="{{item.profilePicture.url}}" alt="">
                 <div class="media-body">
                     <a href="{{item.get_absolute_url}}">{{item.firstName}} {{ item.lastName }}</a>
                     

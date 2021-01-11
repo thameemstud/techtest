@@ -54,6 +54,7 @@ class TeacherCreateView(EmailValidatorMixin, View):
     form = BulkUploadForm
     model = Teacher
     template_name = "directory/create.html"
+    subjet_count = 5
 
     def get(self, request, *args, **kwargs):
             context = {'form': self.form()}
@@ -70,7 +71,7 @@ class TeacherCreateView(EmailValidatorMixin, View):
 
                 zip_file = form.cleaned_data["zip_file"]
                 zipfile_obj = ZipFile(zip_file)
-
+                
                 columns = next(csv_data)
                 for row in csv_data:
                     email = row[3].strip()
@@ -84,8 +85,16 @@ class TeacherCreateView(EmailValidatorMixin, View):
                             teacher_obj.lastName = row[1]
                             teacher_obj.email = email
                             teacher_obj.save()
+                            subject_list = row[6].strip().split(",")
+                            subject_list = [item.strip().upper() for item  in subject_list if item.strip()]
+                            teacher_subject_list = subject_list[:self.subjet_count]
+                            for subj in teacher_subject_list:
+                                sobj, created = Subject.objects.get_or_create(
+                                                        title=subj
+                                                    )
+                                teacher_obj.subject.add(sobj)
                             pic_name = row[4].strip()
-                            if pic_name in zipfile_obj.namelist:
+                            if pic_name in zipfile_obj.namelist():
                                 file_obj = File(zipfile_obj.open(pic_name, 'r'))
                                 teacher_obj.profilePicture.save(pic_name, file_obj, save=True)
                 

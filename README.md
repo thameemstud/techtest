@@ -27,6 +27,6 @@ In order to run this app you'll need to install Python 3.6
 
 5. Go to this url : http://127.0.0.1:8000/ and it will redirect to http://127.0.0.1:8000/directory/teachers/list/
 
-6. For bulk upload, Click on the `create bulk` button on the top right and upload the provided csv and zip files
+6. For bulk upload, Click on the `create bulk` button on the top right in the teachers list page and upload the provided csv and zip files
 
 7. Also in the create bulk page it will hightlight any duplicates or incorrect data exists in the csv file.

@@ -10,6 +10,6 @@
 
 In order to run this container you'll need docker installed.
 
-* [Windows](https://docs.docker.com/windows/started)
-* [OS X](https://docs.docker.com/mac/started/)
-* [Linux](https://docs.docker.com/linux/started/)
+* [Windows](https://docs.docker.com/docker-for-windows/install/)
+* [OS X](https://docs.docker.com/docker-for-mac/install/)
+* [Linux](https://docs.docker.com/engine/install/ubuntu/)

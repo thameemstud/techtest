@@ -17,9 +17,9 @@ In order to run this app you'll need to install Python 3.6
 
 #### Follow the below steps, once you install the python
 
-1. Download this project from the top right button with green color named Code
+1. Download the project 
 
-2. Go inside the project home folder
+2. Go inside the project home folder 'Directory'
 
 3. Run command `pip3 install -r requirements.txt` to install all the projects dependencies 
 

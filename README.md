@@ -19,7 +19,7 @@ In order to run this app you'll need to install Python 3.6
 
 1. Download the project 
 
-2. Go inside the project home folder 'Directory'
+2. Go inside the project home folder `Directory`
 
 3. Run command `pip3 install -r requirements.txt` to install all the projects dependencies 
 

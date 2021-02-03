@@ -31,7 +31,7 @@ In order to run this app you'll need to install Python 3.6
 
 7. If the user is not logged in then it will take to login page, then provide the given username and password 
 
-  - Username : admin
-  - Password : abc123
+       - Username : admin
+       - Password : abc123
 
 7. Also in the create bulk page it will hightlight any duplicates or incorrect data exists in the csv file.

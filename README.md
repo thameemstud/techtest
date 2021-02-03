@@ -29,4 +29,9 @@ In order to run this app you'll need to install Python 3.6
 
 6. For bulk upload, Click on the `create bulk` button on the top right in the teachers list page and upload the provided csv and zip files
 
+7. If the user is not logged in then it will take to login page, then provide the given username and password 
+
+  - Username : admin
+  - Password : abc123
+
 7. Also in the create bulk page it will hightlight any duplicates or incorrect data exists in the csv file.
